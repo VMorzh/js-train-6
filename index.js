@@ -1,6 +1,14 @@
-//Завдання 1.Cтворіть об'єкт person за допомогою конструктора з полями name: "John",age: 25
-let person = {};
+// const {
+//   name,
+//   age,
+//   address: {},
+// } = {};
 
+//Завдання 1.Cтворіть об'єкт person за допомогою конструктора з полями name: "John",age: 25
+let person = {
+  name: "John",
+  age: 25,
+};
 console.log("Завдання 1 ====================================");
 
 console.log("person", person); // Виведе {name: "John", age: 25}
@@ -10,8 +18,15 @@ console.log("person", person); // Виведе {name: "John", age: 25}
 let personLarge = {
   //використовуємо деструктурізацію на об'єкті person
   //створюємо об'єкт address
-};
+  name: "John",
+  age: 25,
 
+  address: {
+    street: "123 Main St",
+    city: "New York",
+    country: "USA",
+  },
+};
 console.log("Завдання 2 ====================================");
 console.log("personLarge", personLarge); // Виведе
 // personLarge {
@@ -20,17 +35,21 @@ console.log("personLarge", personLarge); // Виведе
 //   address: { street: '123 Main St', city: 'New York', country: 'USA' }
 // }
 
-//Завдання 3: Створіть функцію, що повертає новий об'єкт з тими ж властивостями, що й переданий у якості аргумента об'єкт.
+//Завдання 3: Створіть функцію, що повертає новий об'єкт з тими ж властивостями,
+// що й переданий у якості аргумента об'єкт.
 
-var animal = {
+let animal = {
   type: "Dog",
   breed: "Labrador Retriever",
 };
 
 // Функція для створення нового об'єкта з тими ж властивостями
 function copyObject(obj) {
-  // Використовуємо синтаксис деструктурізації {...person} для створення нового об'єкта з тими ж властивостями
+  // Використовуємо синтаксис деструктурізації {...person} для створення нового
+  //об'єкта з тими ж властивостями
+  const a = ({ ...animal } = obj);
   // Повертаємо новий об'єкт
+  return a;
 }
 
 console.log("Завдання 3 ====================================");
@@ -42,13 +61,20 @@ let fruit = {
   name: "Banana",
   color: "Yellow",
 };
+
 // Функція для перевірки наявності властивості в об'єкті
+
 function hasProperty(obj, property) {
   // Використовуємо оператор "in" для перевірки наявності властивості
   // Запишимо умову якщо властивість існує повертає текст Property ${property} exists,
   // інашке повертаємо Property ${property} does not exist.
+  if (property in obj) {
+    return `Property ${property} exist`;
+  } else {
+    return `Property ${property} does not exist`;
+  }
 }
-
+// console.log(!!fruit.color);
 console.log("Завдання 4 ====================================");
 console.log(hasProperty(fruit, "name")); // Виведе "Property name exists."
 console.log(hasProperty(fruit, "taste")); // Виведе "Property color does not exist."
@@ -62,8 +88,16 @@ let country = {
 function printKeysAndValues(obj) {
   // Проходимося по всіх ключах об'єкту за допомогою циклу "for in"
   // Виводимо ключ та значення на консоль
-}
+  for (const key in country) {
+    const item = country[key];
 
+    if (typeof country[key] === obj) {
+      for (const key2 in item) console.log(item[key2]);
+    } else {
+      console.log(item);
+    }
+  }
+}
 console.log("Завдання 5 ====================================");
 printKeysAndValues(country);
 // Виведе
