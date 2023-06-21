@@ -88,14 +88,8 @@ let country = {
 function printKeysAndValues(obj) {
   // Проходимося по всіх ключах об'єкту за допомогою циклу "for in"
   // Виводимо ключ та значення на консоль
-  for (const key in country) {
-    const item = country[key];
-
-    if (typeof country[key] === obj) {
-      for (const key2 in item) console.log(item[key2]);
-    } else {
-      console.log(item);
-    }
+  for (const key in obj) {
+    console.log(`Key: ${key}, Value: ${obj[key]}`);
   }
 }
 console.log("Завдання 5 ====================================");
@@ -111,6 +105,8 @@ let movie = {
 };
 // Функція для видалення властивості з об'єкта
 function deleteProperty(obj, property) {
+  delete movie.director;
+  return movie;
   // Використовуємо оператор "delete" для видалення властивості
   // Повертаємо об'єкт
 }
@@ -123,6 +119,9 @@ console.log(deleteProperty(movie, "director")); // Виведе { title: 'Incept
 let user = {
   name: "John",
   age: 25,
+  introduce: function () {
+    return `My name is ${this.name} and I am ${this.age} years old`;
+  },
   // Створюємо метод introduse, який за допомогою ключового слова this має повернути такий рядок
   // My name is John and I am 25 years old.
 };
@@ -130,7 +129,7 @@ let user = {
 console.log("Завдання 7 ====================================");
 // Викликаємо метод introduce об'єкта user
 // Розкоментуйте рядок нижче після виконня завдання для перевірки
-// console.log(user.introduce());
+console.log(user.introduce());
 // Виведе My name is John and I am 25 years old.
 
 // Завдання 8: Створіть функцію, яка додає нове поле до об'єкту.
@@ -143,6 +142,8 @@ let book = {
 function addField(obj, newField, value) {
   // Додаємо нове поле до об'єкту з допомогою квадратних дужок
   // Повертаємо об'єкт
+  obj[newField] = value;
+  return obj;
 }
 
 console.log("Завдання 8 ====================================");
@@ -155,16 +156,19 @@ let laptop = {
 };
 // Функція для деструктуризації об'єкту
 function destructureObject(obj) {
-  // Використовуємо деструктуризацію для створення нових змінних з властивостей об'єкту і отримуємо з нього змінні brand та model
+  const comp = ({ ...laptop } = obj);
+  return comp;
+  // Використовуємо деструктуризацію для створення нових змінних з властивостей об'єкту
+  // і отримуємо з нього змінні brand та model
   // Повертаємо нові змінні  в форматі 'Brand: ${brand}, Model: ${model}'
 }
-
 console.log("Завдання 9 ====================================");
 console.log(destructureObject(laptop)); // Виведе Brand: Dell, Model: XPS 13
 
 // Завдання 10: Змініть значення полів об'єкту, що знаходяться в масиві об'єктів.
 
-// Створюємо масив об'єктів userList, першим елементом якого буде об'єкт name:"Jack",role:"reader", а другим об'єкт name: "Jane", role: 'admin'
+// Створюємо масив об'єктів userList, першим елементом якого буде об'єкт name:"Jack",
+//role:"reader", а другим об'єкт name: "Jane", role: 'admin'
 
 let userList = [
   { name: "Jack", role: "reader" },
@@ -174,9 +178,15 @@ let userList = [
 function changeRole(array, newRole) {
   // Ітеруємося по масиву об'єктів за допомогою циклу "for of"
   // Змінюємо роль кожного користувача на нове ім'я
+  for (let obj of array) {
+    obj.role = newRole;
+  }
+
+  // userList[0].role = "editor"; якщо не всіх, то без фор оф)
+  // userList[1].role = "editor";
+  console.log(userList);
   // Виводимо об'єкт на консоль
 }
-
 console.log("Завдання 10 ====================================");
 changeRole(userList, "editor");
 // Виведе
@@ -195,14 +205,22 @@ let product = {
 };
 // Функція для виводу деталей людини
 function printProductDetails(obj) {
-  // Використовуємо деструктуризацію для отримання значень productName, price i також значень companyName, country вкладеного об'єкту manufacturer
+  const {
+    productName,
+    price,
+    manufacturer: { companyName, city = "", country },
+  } = obj;
+  // Використовуємо деструктуризацію для отримання значень productName,
+  //price i також значень companyName, country вкладеного об'єкту manufacturer
   // Виводимо productName, price, city та country на консоль
+  console.log(productName, price, city, companyName, country);
 }
 
 console.log("Завдання 11 ====================================");
 printProductDetails(product); // Виведе Smartphone 699 Tech Corp USA
 
-// Завдання 12: Показати, що об'єкти будуть дорівнювати один одному лише тоді, коли одному об'єкту присвоїти значення іншого.
+// Завдання 12: Показати, що об'єкти будуть дорівнювати один одному лише тоді, коли
+//одному об'єкту присвоїти значення іншого.
 // Створіть об'єкт два об'єкти planet1 та planet2 з полями   name: "Земля",radius: 6371,
 
 let planet1 = { name: "Земля", radius: 6371 };
@@ -213,6 +231,9 @@ function compareObjects(obj1, obj2) {
   // Виводимо результат порівняння об'єктів
   // Присвоємо obj2 значення об'єкту obj1
   // Виводимо результат порівняння об'єктів
+  console.log(obj1 === obj2);
+  obj2 = obj1;
+  console.log(obj1 === obj2);
 }
 
 console.log("Завдання 12 ====================================");
@@ -226,7 +247,8 @@ let car = {
   year: 2022,
 };
 // Створюємо функцію, яка приймає об'єкт як аргумент і використовує деструктуризацію зі значенням за замовчуванням
-// brand за замовчуванням призначемо Unknown, year за замовчуванням призначемо 0, country за замовчуванням призначемо Unknown
+// brand за замовчуванням призначемо Unknown, year за замовчуванням призначемо 0,
+//country за замовчуванням призначемо Unknown
 
 function showCarInfo({
   brand = "Unknown",
@@ -234,6 +256,7 @@ function showCarInfo({
   country = "Unknown",
 } = {}) {
   // Повертаємо об'єкт зі значеннями властивостей
+  console.log(brand, year, country);
 }
 
 console.log("Завдання 13 ====================================");
@@ -244,10 +267,12 @@ console.log(showCarInfo(car)); // Виведе { brand: 'BMW', year: 2022, count
 function addProperty(array) {
   // Додаємо нову властивість customProperty до прототипу Array зі значенням myProperty
   // Повертаємо переданий масив з новою властивістю
+  newArr.prototype.customProperty = "myProperty";
+  return array;
 }
 
 console.log("Завдання 14 ====================================");
 // Створимо масив newArr з новою властивістю за допомогої нашої функції в яку передамо [1, 2, 3, 4, 5]
 
 // Розкоментуйте рядок нижче після виконня завдання для перевірки
-// console.log(newArr.customProperty); // Виведе myProperty
+console.log(newArr.customProperty); // Виведе myProperty
